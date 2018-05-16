@@ -4,7 +4,7 @@ services:
   concourse-db:
     image: postgres
     ports: ["5432:5432"]
-    volumes: ["concourse-db:/database"]
+    volumes: ["database:/database"]
     environment:
     - POSTGRES_DB=concourse
     - POSTGRES_PASSWORD=concourse_pass
@@ -34,11 +34,11 @@ services:
     privileged: true
     links: [concourse-web]
     depends_on: [concourse-web]
-    volumes: ["./keys/worker:/concourse-keys", "concourse-worker:/worker-state"]
+    volumes: ["./keys/worker:/concourse-keys", "worker-state:/worker-state"]
     environment:
     - CONCOURSE_TSA_HOST=concourse-web:2222
     - CONCOURSE_GARDEN_NETWORK
 
 volumes:
-  concourse-db:
-  concourse-worker:
+  database:
+  worker-state:
