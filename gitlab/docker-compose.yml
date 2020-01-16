@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    ports: ["10443:443", "10080:80", "10022:22"]
+    hostname: localhost
+    volumes:
+      - config:/etc/gitlab
+      - logs:/var/log/gitlab
+      - data:/var/opt/gitlab
+
+  runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - runner-config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  config:
+  logs:
+  data:
+  runner-config:
