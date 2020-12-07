@@ -6,7 +6,7 @@ services:
     ports: [ "7080:8080" ]
     volumes: [ "jenkins_home:/var/jenkins_home" ]
 
-  concourse:
+  gitbucket:
     image: gitbucket/gitbucket
     ports: [ "7090:8080" ]
     volumes: [ "gitbucket_home:/gitbucket" ]
