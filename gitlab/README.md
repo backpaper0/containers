@@ -13,13 +13,17 @@ docker compose up -d
 ## 管理者でログイン
 
 管理者のユーザー名は`root`。
+パスワードは`password`。
 
-パスワードは`/etc/gitlab/initial_root_password`へ出力されているらしい。
-次のコマンドでパスワードを確認する。
+<details>
+<summary>パスワードを明示的に設定しない場合</summary>
+パスワードは明示的に設定しているが、そうしない場合は自動生成されて確認用に`/etc/gitlab/initial_root_password`へファイル出力される。
+その場合、次のコマンドでパスワードを確認する。
 
 ```bash
 docker compose exec gitlab cat /etc/gitlab/initial_root_password
 ```
+</details>
 
 GitLabを開いてログインする。
 
@@ -37,10 +41,10 @@ GitLabを開いてログインする。
 export RUNNER_TOKEN=...
 ```
 
-次のコマンドで登録する。
+次のコマンドで登録する(`--index=2`に対してもコマンドを実行すること)。
 
 ```bash
-docker compose run --rm -v runner-config:/etc/gitlab-runner runner register \
+docker compose exec --index=1 runner gitlab-runner register \
   --non-interactive \
   --url "http://gitlab:9080/" \
   --registration-token "$RUNNER_TOKEN" \
@@ -57,10 +61,10 @@ docker compose run --rm -v runner-config:/etc/gitlab-runner runner register \
 まず次のコマンドで`config.toml`を取り出す。
 
 ```bash
-docker compose cp runner:/etc/gitlab-runner/config.toml .
+seq 2|xargs -I{} docker compose cp --index={} runner:/etc/gitlab-runner/config.toml config{}.toml
 ```
 
-次にテキストエディターで`config.toml`を編集する。
+次にテキストエディターで編集する。
 
 - `[[runners]]`以下に`clone_url = "http://gitlab:9080"`を追加する
 - `[runners.docker]`以下に`network_mode = 'gitlab_default'`を追加する(`gitlab_default`はDocker Composeのネットワーク)
@@ -68,7 +72,7 @@ docker compose cp runner:/etc/gitlab-runner/config.toml .
 次のコマンドで`config.toml`を戻す。
 
 ```bash
-docker compose cp config.toml runner:/etc/gitlab-runner/config.toml
+seq 2|xargs -I{} docker compose cp --index={} config{}.toml runner:/etc/gitlab-runner/config.toml
 ```
 
 最後にランナーをリスタートさせる。

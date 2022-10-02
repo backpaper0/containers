@@ -6,6 +6,7 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://localhost:9080'
         gitlab_rails['gitlab_shell_ssh_port'] = 9022
+        gitlab_rails['initial_root_password'] = File.read('/run/secrets/gitlab_root_password').gsub("\n", "")
     ports:
       - "9080:9080"
       - "9443:443"
@@ -14,18 +15,23 @@ services:
       - data:/var/opt/gitlab
       - logs:/var/log/gitlab
       - config:/etc/gitlab
+    secrets:
+      - gitlab_root_password
     shm_size: 256m
 
   runner:
     image: gitlab/gitlab-runner:latest
     restart: always
     volumes:
-      - runner-config:/etc/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      replicas: 2
 
 volumes:
   config:
   logs:
   data:
-  runner-config:
 
+secrets:
+  gitlab_root_password:
+    file: ./root_password.txt
