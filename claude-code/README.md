@@ -23,7 +23,7 @@ docker run -it --rm \
 docker network create --internal claude-code-network
 ```
 
-``bash
+```bash
 docker run -d --name claude-code-proxy \
   -v $PWD/proxy/squid.conf:/etc/squid/conf.d/_squid.conf:ro \
   -v $PWD/proxy/whitelist.txt:/etc/squid/whitelist.txt:ro \
