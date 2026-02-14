@@ -1,8 +1,11 @@
 api.anthropic.com
+platform.claude.com
+code.claude.com
 # Claude Codeのバージョンチェックやアップデートのために必要
 storage.googleapis.com
 
 # miseで必要
+mise.jdx.dev
 mise-versions.jdx.dev
 api.github.com
 github.com
