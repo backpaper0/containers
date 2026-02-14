@@ -1,0 +1,14 @@
+api.anthropic.com
+# Claude Codeのバージョンチェックやアップデートのために必要
+storage.googleapis.com
+
+# miseで必要
+mise-versions.jdx.dev
+api.github.com
+github.com
+release-assets.githubusercontent.com
+
+# Python
+pypi.org
+files.pythonhosted.org
+
