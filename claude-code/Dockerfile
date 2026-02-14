@@ -28,8 +28,6 @@ WORKDIR /home/claude
 SHELL ["/bin/bash", "-c"]
 
 ENV CLAUDE_CONFIG_DIR='/home/claude/.claude'
-ENV HISTFILE='/home/claude/commandhistory/.bash_history'
-ENV PROMPT_COMMAND='history -a'
 ENV TZ='Asia/Tokyo'
 
 # miseをインストール
@@ -41,8 +39,6 @@ _EOF_
 # Claude Codeをインストール
 RUN <<_EOF_
 mkdir ./.claude
-mkdir ./commandhistory
-touch ./commandhistory/.bash_history
 curl -fsSL https://claude.ai/install.sh | bash
 _EOF_
 
