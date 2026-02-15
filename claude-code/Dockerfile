@@ -11,8 +11,16 @@ apt install -y --no-install-recommends \
   ca-certificates \
   git \
   jq \
-  vim
+  vim \
+  locales
 rm -fr /var/lib/apt/lists/*
+_EOF_
+
+# 日本語の対応
+RUN <<_EOF_
+sed -i 's/^# *ja_JP.UTF-8 UTF-8/ja_JP.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+update-locale LANG=ja_JP.UTF-8
 _EOF_
 
 # ユーザーを作成
@@ -42,4 +50,9 @@ mkdir ./.claude
 curl -fsSL https://claude.ai/install.sh | bash
 _EOF_
 
-WORKDIR /home/claude/src
+# 必要なファイル・ディレクトリを準備
+RUN <<_EOF_
+mkdir -p ./.config
+_EOF_
+
+WORKDIR /workspaces
