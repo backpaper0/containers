@@ -1,6 +1,11 @@
 api.anthropic.com
 platform.claude.com
 code.claude.com
+raw.githubusercontent.com
+dl.google.com
+www.google.com
+deb.debian.org
+
 # Claude Codeのバージョンチェックやアップデートのために必要
 storage.googleapis.com
 
@@ -14,4 +19,19 @@ release-assets.githubusercontent.com
 # Python
 pypi.org
 files.pythonhosted.org
+
+# Node
+nodejs.org
+registry.npmjs.org
+
+# Golang
+go.abhg.dev
+go.dev
+golang.org
+gopkg.in
+goproxy.cn
+goproxy.io
+pkg.go.dev
+sum.golang.org
+proxy.golang.org
 
